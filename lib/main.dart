@@ -1,30 +1,30 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:open_market/CustomOutlineButton.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import 'home.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Open Market',
-      theme: ThemeData.from(
-        colorScheme: ColorScheme.light(),
-      ).copyWith(
-        primaryColor: new Color(0xff305097),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            primary: new Color(0xff305097),
-          ),
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: 'Open Market',
+    theme: ThemeData.from(
+      colorScheme: ColorScheme.light(),
+    ).copyWith(
+      primaryColor: new Color(0xff305097),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          primary: new Color(0xff305097),
         ),
       ),
-      home: Main(),
-    );
-  }
+    ),
+    home: Main(),
+  ));
 }
 
 class Main extends StatefulWidget {
@@ -127,7 +127,7 @@ class _MainState extends State<Main> {
                             color: Theme.of(context).primaryColor,
                             onPressed: () {
                               if (formKey.currentState.validate()) {
-                                // logar();
+                                logar();
                               }
                             },
                           ),
@@ -160,5 +160,54 @@ class _MainState extends State<Main> {
             )
           ],
         )));
+  }
+
+  Future<void> logar() async {
+    loading();
+    try {
+      UserCredential usuario = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+          email: emailController.text.replaceAll("\t", ""), password: senhaController.text.replaceAll("\t", ""));
+      Navigator.pop(context); //fecha o loading
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } catch (a) {
+      Navigator.pop(context); //fecha o loading
+      SnackBar snackBar = SnackBar(
+        backgroundColor: Colors.red,
+        content: Text("Erro ao fazer o Login"),
+      );
+      scaffoldKey.currentState.showSnackBar(snackBar);
+    }
+  }
+
+  void loading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Color(0),
+          child: new Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), color: Colors.white),
+            padding: EdgeInsets.all(10),
+            height: 70,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                new CircularProgressIndicator(),
+                SizedBox(
+                  width: 30,
+                ),
+                new Text(" Verificando ..."),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

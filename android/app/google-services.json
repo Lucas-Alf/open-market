@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "607687925970",
+    "firebase_url": "https://open-market-a39ab.firebaseio.com",
+    "project_id": "open-market-a39ab",
+    "storage_bucket": "open-market-a39ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607687925970:android:d26c9be1f49d2cbc630d0b",
+        "android_client_info": {
+          "package_name": "com.setrem.open_market"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607687925970-55iuqt2duvvk1gddkpbjcmlv94q6jsqu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.setrem.open_market",
+            "certificate_hash": "c3ad8431a6ea487307b7873f82412541cff92592"
+          }
+        },
+        {
+          "client_id": "607687925970-4kgtl58p7smcc3ih21d8o1jl43su40b1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEVAoReTbFJGxz9nDN-PN8NSrd5FU15lU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607687925970-4kgtl58p7smcc3ih21d8o1jl43su40b1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
