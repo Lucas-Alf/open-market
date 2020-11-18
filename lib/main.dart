@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:open_market/CustomOutlineButton.dart';
+import 'registrar.dart';
 
 import 'home.dart';
 
@@ -139,8 +140,8 @@ class _MainState extends State<Main> {
                                   padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                   textColor: Theme.of(context).primaryColor,
                                   onPressed: () {
-                                    // Navigator.push(context,
-                                    // MaterialPageRoute(builder: (context) => Registrar()));
+                                    Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => Registrar()));
                                   },
                                   child: Text("Registrar-se agora")),
                               FlatButton(
