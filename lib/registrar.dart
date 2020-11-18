@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:open_market/CustomOutlineButton.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Registrar extends StatefulWidget {
   @override
@@ -91,7 +93,6 @@ class _RegistrarState extends State<Registrar> {
                               Expanded(
                                 child: TextFormField(
                                   keyboardType: TextInputType.text,
-                                  obscureText: true,
                                   decoration: InputDecoration(
                                     labelText: "Sobrenome",
                                   ),
@@ -159,11 +160,19 @@ class _RegistrarState extends State<Registrar> {
                             SizedBox(
                               width: double.infinity,
                               child: CustomOutlineButton(
-                                text: "Entrar",
+                                text: "Registrar-se",
                                 color: Theme.of(context).primaryColor,
                                 onPressed: () {
                                   if (formKey.currentState.validate()) {
-                                    // registrar();
+                                    registrar();
+                                    FirebaseFirestore.instance.collection("usuarios").doc(usuarioCPF.text).set(
+                                        {
+                                          "usuarioNome": usuarioNome.text,
+                                          "usuarioSobrenome": usuarioSobrenome.text,
+                                          "usuarioCEP": usuarioCPF.text,
+                                          "usuarioEndereço": "",
+                                        }
+                                    );
                                   }
                                 },
                               ),
@@ -180,7 +189,7 @@ class _RegistrarState extends State<Registrar> {
         )
     );
   }
-/*
+
   Future<void> registrar() async {
     try{
       UserCredential usuario = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -198,6 +207,5 @@ class _RegistrarState extends State<Registrar> {
       scaffoldKey.currentState.showSnackBar(snackbar);
     }
   }
-   */
 }
 
