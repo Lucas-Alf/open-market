@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -34,7 +35,7 @@ class _HomeState extends State<Home> {
         title: _isSearching ? _buildSearchField() : Text("Open Market"),
         actions: _buildActions(),
       ),
-      body: SingleChildScrollView(
+      body:SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -62,9 +63,7 @@ class _HomeState extends State<Home> {
                 );
               }).toList(),
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
             Row(
               children: <Widget>[
                 Column(
@@ -144,6 +143,9 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
+            SizedBox(height: 20),
+            //Don' know how to put the products here without taking out the SingleChildScrollView!
+            
           ],
         ),
       ),
