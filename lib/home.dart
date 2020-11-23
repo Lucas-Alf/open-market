@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:open_market/CustomProductWidget.dart';
+import 'package:open_market/produto.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -230,6 +231,10 @@ class _HomeState extends State<Home> {
                                           valor: double.parse(snapshot.data.documents[index].data()["produtoPreco"].toString()),
                                           imageURL: 'assets/cadeira.png',
                                           favorito: false,
+                                          onPressed: (){
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (context) => Produto(snapshot.data.documents[index])));
+                                          },
                                         ),
 
 
