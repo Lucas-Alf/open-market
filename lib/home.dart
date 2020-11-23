@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:open_market/CustomProductWidget.dart';
@@ -194,28 +195,51 @@ class _HomeState extends State<Home> {
             ),
             SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(5),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
+                //crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Column(
-                    children: [
-                      CustomProductWidget(
-                        id: '0',
-                        descricao: 'Cadeira Gamer Alpha',
-                        valor: 1499.9,
-                        imageURL: 'assets/cadeira.png',
-                        favorito: false,
-                      ),
-                      SizedBox(height: 15),
-                      CustomProductWidget(
-                        id: '1',
-                        descricao: 'Teste',
-                        valor: 400,
-                        imageURL: 'assets/userIcon.png',
-                        favorito: false,
-                      ),
-                    ],
-                  )
+                  Flexible(
+                    //fit: FlexFit.loose,
+                    child: StreamBuilder(
+                        stream: FirebaseFirestore.instance.collection("produtos").orderBy("produtoNome", descending:false).snapshots(),
+                        builder: (context, snapshot) {
+                          switch(snapshot.connectionState){
+                            case ConnectionState.none:
+                            case ConnectionState.done:
+                            case ConnectionState.waiting:
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            default:
+                              if (snapshot.data.documents.length==0){ //
+                                return Center(
+                                  child: Text("Não há dados!",style: TextStyle(color: Colors.redAccent,fontSize: 20),),
+                                );
+                              }
+                              return ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.data.documents.length,
+                                  itemBuilder: (context, index) {
+                                    return Card( // Lista os produtos
+                                        child: CustomProductWidget(
+                                          id: snapshot.data.documents[index].documentID.toString(),
+                                          descricao: snapshot.data.documents[index].data()["produtoNome"].toString(),
+                                          valor: double.parse(snapshot.data.documents[index].data()["produtoPreco"].toString()),
+                                          imageURL: 'assets/cadeira.png',
+                                          favorito: false,
+                                        ),
+
+
+                                    );
+                                  }
+                              );
+                          }
+                        }
+                    ),
+                  ),
                 ],
               ),
             )
