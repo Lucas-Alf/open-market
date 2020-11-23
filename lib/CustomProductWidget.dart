@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:octo_image/octo_image.dart';
 
 class CustomProductWidget extends StatelessWidget {
   final String id;
@@ -10,13 +13,14 @@ class CustomProductWidget extends StatelessWidget {
   final bool favorito;
   final VoidCallback onPressed;
 
-  const CustomProductWidget({Key key,
-    this.id,
-    this.descricao,
-    this.valor,
-    this.favorito,
-    this.onPressed,
-    this.imageURL})
+  const CustomProductWidget(
+      {Key key,
+      this.id,
+      this.descricao,
+      this.valor,
+      this.favorito,
+      this.onPressed,
+      this.imageURL})
       : super(key: key);
 
   @override
@@ -37,7 +41,16 @@ class CustomProductWidget extends StatelessWidget {
                 Container(
                     padding: EdgeInsets.all(10),
                     height: 282,
-                    child: Image(image: AssetImage(this.imageURL), height: 89)),
+                    child: OctoImage(
+                      image: CachedNetworkImageProvider(
+                          ReturnImage(this.imageURL)),
+                      placeholderBuilder: OctoPlaceholder.blurHash(
+                        'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+                      ),
+                      errorBuilder: OctoError.icon(color: Colors.red),
+                      fit: BoxFit.cover,
+                      height: 89,
+                    )),
                 Container(
                     height: 76,
                     decoration: BoxDecoration(
@@ -92,9 +105,9 @@ class CustomProductWidget extends StatelessWidget {
                               ),
                               shape: CircleBorder(
                                   side: BorderSide(
-                                    width: 0,
-                                    style: BorderStyle.none,
-                                  )),
+                                width: 0,
+                                style: BorderStyle.none,
+                              )),
                             ),
                           )
                         ],
@@ -103,7 +116,14 @@ class CustomProductWidget extends StatelessWidget {
               ],
             ),
           ),
-        )
-    );
+        ));
+  }
+
+  String ReturnImage(String filename) {
+    // final ref = FirebaseStorage.instance.ref().child(filename);
+    // var url = "";
+    // ref.getDownloadURL().then((value) => {url = value});
+    // return url;
+    return 'https://blurha.sh/assets/images/img1.jpg';
   }
 }
