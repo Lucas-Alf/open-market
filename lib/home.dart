@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:open_market/CustomProductWidget.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class _HomeState extends State<Home> {
   TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
   String searchQuery = "Search query";
-  int paginaCorrente=0;
+  int paginaCorrente = 0;
 
   final List<Widget> paginas = [
     //Home(),
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
     //Conta(),
   ];
 
-  void quandoPressionado(int index){
+  void quandoPressionado(int index) {
     setState(() {
       paginaCorrente = index;
     });
@@ -35,14 +36,14 @@ class _HomeState extends State<Home> {
         title: _isSearching ? _buildSearchField() : Text("Open Market"),
         actions: _buildActions(),
       ),
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             CarouselSlider(
               options: CarouselOptions(
                   height: 200.0,
-                  aspectRatio: 16/9,
+                  aspectRatio: 16 / 9,
                   viewportFraction: 1,
                   autoPlay: true,
                   autoPlayInterval: Duration(seconds: 15),
@@ -63,94 +64,166 @@ class _HomeState extends State<Home> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Row(
               children: <Widget>[
-                Column(
-                  children: [
-                    MaterialButton(
-                      onPressed: () {},
-                      color: Colors.white,
-                      textColor: Colors.black,
-                      child: Icon(
-                        Icons.local_mall,
-                        size: 25,
+                SizedBox(width: 10),
+                Container(
+                  width: 64,
+                  child: Column(
+                    children: [
+                      MaterialButton(
+                        onPressed: () {},
+                        color: Colors.white,
+                        textColor: Colors.black,
+                        child: Icon(Icons.local_mall, size: 20),
+                        padding: EdgeInsets.all(15),
+                        shape: CircleBorder(
+                            side: BorderSide(
+                          color: Colors.grey,
+                          width: 1.0,
+                          style: BorderStyle.solid,
+                        )),
                       ),
-                      padding: EdgeInsets.all(15),
-                      shape: CircleBorder(side: BorderSide(
-                        color: Colors.grey, width: 1.0, style: BorderStyle.solid,
-                      )),
-                    ),
-                    Text('Moda')
-                  ],
+                      Text('Moda')
+                    ],
+                  ),
                 ),
                 SizedBox(width: 10),
-                Column(
-                  children: [
-                    MaterialButton(
-                      onPressed: () {},
-                      color: Colors.white,
-                      textColor: Colors.black,
-                      child: Icon(
-                        Icons.stay_current_portrait,
-                        size: 25,
+                Container(
+                  width: 65,
+                  child: Column(
+                    children: [
+                      MaterialButton(
+                        onPressed: () {},
+                        color: Colors.white,
+                        textColor: Colors.black,
+                        child: Icon(
+                          Icons.stay_current_portrait,
+                          size: 20,
+                        ),
+                        padding: EdgeInsets.all(15),
+                        shape: CircleBorder(
+                            side: BorderSide(
+                          color: Colors.grey,
+                          width: 1.0,
+                          style: BorderStyle.solid,
+                        )),
                       ),
-                      padding: EdgeInsets.all(15),
-                      shape: CircleBorder(side: BorderSide(
-                        color: Colors.grey, width: 1.0, style: BorderStyle.solid,
-                      )),
-                    ),
-                    Text('Celulares')
-                  ],
+                      Text('Celulares')
+                    ],
+                  ),
                 ),
                 SizedBox(width: 10),
-                Column(
-                  children: [
-                    MaterialButton(
-                      onPressed: () {},
-                      color: Colors.white,
-                      textColor: Colors.black,
-                      child: Icon(
-                        Icons.sports_motorsports,
-                        size: 25,
+                Container(
+                  width: 65,
+                  child: Column(
+                    children: [
+                      MaterialButton(
+                        onPressed: () {},
+                        color: Colors.white,
+                        textColor: Colors.black,
+                        child: Icon(
+                          Icons.sports_motorsports,
+                          size: 20,
+                        ),
+                        padding: EdgeInsets.all(15),
+                        shape: CircleBorder(
+                            side: BorderSide(
+                          color: Colors.grey,
+                          width: 1.0,
+                          style: BorderStyle.solid,
+                        )),
                       ),
-                      padding: EdgeInsets.all(15),
-                      shape: CircleBorder(side: BorderSide(
-                        color: Colors.grey, width: 1.0, style: BorderStyle.solid,
-                      )),
-                    ),
-                    Text('Motos')
-                  ],
+                      Text('Motos')
+                    ],
+                  ),
                 ),
                 SizedBox(width: 10),
-                Column(
-                  children: [
-                    MaterialButton(
-                      onPressed: () {},
-                      color: Colors.white,
-                      textColor: Colors.black,
-                      child: Icon(
-                        Icons.add,
-                        size: 25,
+                Container(
+                  width: 65,
+                  child: Column(
+                    children: [
+                      MaterialButton(
+                        onPressed: () {},
+                        color: Colors.white,
+                        textColor: Colors.black,
+                        child: Icon(
+                          Icons.directions_car,
+                          size: 20,
+                        ),
+                        padding: EdgeInsets.all(15),
+                        shape: CircleBorder(
+                            side: BorderSide(
+                          color: Colors.grey,
+                          width: 1.0,
+                          style: BorderStyle.solid,
+                        )),
                       ),
-                      padding: EdgeInsets.all(15),
-                      shape: CircleBorder(side: BorderSide(
-                        color: Colors.grey, width: 1.0, style: BorderStyle.solid,
-                      )),
-                    ),
-                    Text('Mais')
-                  ],
+                      Text('Carros')
+                    ],
+                  ),
                 ),
+                SizedBox(width: 10),
+                Container(
+                  width: 65,
+                  child: Column(
+                    children: [
+                      MaterialButton(
+                        onPressed: () {},
+                        color: Colors.white,
+                        textColor: Colors.black,
+                        child: Icon(
+                          Icons.add,
+                          size: 20,
+                        ),
+                        padding: EdgeInsets.all(15),
+                        shape: CircleBorder(
+                            side: BorderSide(
+                          color: Colors.grey,
+                          width: 1.0,
+                          style: BorderStyle.solid,
+                        )),
+                      ),
+                      Text('Mais')
+                    ],
+                  ),
+                ),
+                SizedBox(width: 10),
               ],
             ),
-            SizedBox(height: 20),
-            //Don' know how to put the products here without taking out the SingleChildScrollView!
-            
+            SizedBox(height: 10),
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      CustomProductWidget(
+                        id: '0',
+                        descricao: 'Cadeira Gamer Alpha',
+                        valor: 1499.9,
+                        imageURL: 'assets/cadeira.png',
+                        favorito: false,
+                      ),
+                      SizedBox(height: 15),
+                      CustomProductWidget(
+                        id: '1',
+                        descricao: 'Teste',
+                        valor: 400,
+                        imageURL: 'assets/userIcon.png',
+                        favorito: false,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.red,
+        selectedItemColor: Theme.of(context).primaryColor,
         unselectedItemColor: Colors.black,
         onTap: quandoPressionado,
         currentIndex: paginaCorrente,
@@ -171,7 +244,6 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.person),
             label: "Conta",
           ),
-
         ],
       ),
     );
