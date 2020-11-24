@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,14 +14,13 @@ class CustomProductWidget extends StatelessWidget {
   final bool favorito;
   final VoidCallback onPressed;
 
-  const CustomProductWidget(
-      {Key key,
-      this.id,
-      this.descricao,
-      this.valor,
-      this.favorito,
-      this.onPressed,
-      this.imageURL})
+  const CustomProductWidget({Key key,
+    this.id,
+    this.descricao,
+    this.valor,
+    this.favorito,
+    this.onPressed,
+    this.imageURL})
       : super(key: key);
 
   @override
@@ -116,7 +116,9 @@ class CustomProductWidget extends StatelessWidget {
                             width: 50,
                             alignment: Alignment.topRight,
                             child: RawMaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Favorita(this.id);
+                              },
                               child: Icon(
                                 this.favorito
                                     ? Icons.favorite
@@ -125,9 +127,9 @@ class CustomProductWidget extends StatelessWidget {
                               ),
                               shape: CircleBorder(
                                   side: BorderSide(
-                                width: 0,
-                                style: BorderStyle.none,
-                              )),
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  )),
                             ),
                           )
                         ],
@@ -143,5 +145,16 @@ class CustomProductWidget extends StatelessWidget {
     final ref = FirebaseStorage.instance.ref().child(filename);
     String url = await ref.getDownloadURL();
     return url;
+  }
+
+  void Favorita(String id) {
+    final db = FirebaseFirestore.instance.collection("produtos");
+    db.doc(id).get().then((doc) {
+      if (doc.data()["produtoFavorito"] == true) {
+        db.doc(id).update({"produtoFavorito": false});
+      } else {
+        db.doc(id).update({"produtoFavorito": true});
+      }
+    });
   }
 }

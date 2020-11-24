@@ -230,14 +230,12 @@ class _HomeState extends State<Home> {
                                           descricao: snapshot.data.documents[index].data()["produtoNome"].toString(),
                                           valor: double.parse(snapshot.data.documents[index].data()["produtoPreco"].toString()),
                                           imageURL: snapshot.data.documents[index].data()["produtoImagem"].toString(),
-                                          favorito: false,
+                                          favorito:  snapshot.data.documents[index].data()["produtoFavorito"].toString() == "true" ? true : false,
                                           onPressed: (){
                                             Navigator.push(context,
                                                 MaterialPageRoute(builder: (context) => Produto(snapshot.data.documents[index])));
                                           },
                                         ),
-
-
                                     );
                                   }
                               );
