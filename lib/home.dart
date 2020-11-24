@@ -229,7 +229,7 @@ class _HomeState extends State<Home> {
                                           id: snapshot.data.documents[index].documentID.toString(),
                                           descricao: snapshot.data.documents[index].data()["produtoNome"].toString(),
                                           valor: double.parse(snapshot.data.documents[index].data()["produtoPreco"].toString()),
-                                          imageURL: 'assets/cadeira.png',
+                                          imageURL: snapshot.data.documents[index].data()["produtoImagem"].toString(),
                                           favorito: false,
                                           onPressed: (){
                                             Navigator.push(context,

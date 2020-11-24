@@ -38,19 +38,39 @@ class CustomProductWidget extends StatelessWidget {
             width: double.infinity,
             child: Column(
               children: [
-                Container(
-                    padding: EdgeInsets.all(10),
-                    height: 282,
-                    child: OctoImage(
-                      image: CachedNetworkImageProvider(
-                          ReturnImage(this.imageURL)),
-                      placeholderBuilder: OctoPlaceholder.blurHash(
-                        'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-                      ),
-                      errorBuilder: OctoError.icon(color: Colors.red),
-                      fit: BoxFit.cover,
-                      height: 89,
-                    )),
+                FutureBuilder<String>(
+                  future: ReturnImage(this.imageURL),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.hasData) {
+                      return Container(
+                          padding: EdgeInsets.all(10),
+                          height: 282,
+                          child: OctoImage(
+                            image: CachedNetworkImageProvider(snapshot.data),
+                            placeholderBuilder: OctoPlaceholder.blurHash(
+                              'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+                            ),
+                            errorBuilder: OctoError.icon(color: Colors.red),
+                            fit: BoxFit.cover,
+                            height: 89,
+                          ));
+                    } else {
+                      return Container(
+                          padding: EdgeInsets.all(10),
+                          height: 282,
+                          child: OctoImage(
+                            image: CachedNetworkImageProvider(""),
+                            placeholderBuilder: OctoPlaceholder.blurHash(
+                              'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+                            ),
+                            errorBuilder: OctoError.icon(color: Colors.red),
+                            fit: BoxFit.cover,
+                            height: 89,
+                          ));
+                    }
+                  },
+                ),
                 Container(
                     height: 76,
                     decoration: BoxDecoration(
@@ -119,11 +139,9 @@ class CustomProductWidget extends StatelessWidget {
         ));
   }
 
-  String ReturnImage(String filename) {
-    // final ref = FirebaseStorage.instance.ref().child(filename);
-    // var url = "";
-    // ref.getDownloadURL().then((value) => {url = value});
-    // return url;
-    return 'https://blurha.sh/assets/images/img1.jpg';
+  Future<String> ReturnImage(String filename) async {
+    final ref = FirebaseStorage.instance.ref().child(filename);
+    String url = await ref.getDownloadURL();
+    return url;
   }
 }
