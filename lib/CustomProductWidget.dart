@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:octo_image/octo_image.dart';
+import 'package:open_market/globals.dart';
+import 'package:open_market/main.dart';
 
 class CustomProductWidget extends StatelessWidget {
   final String id;
@@ -14,13 +16,14 @@ class CustomProductWidget extends StatelessWidget {
   final bool favorito;
   final VoidCallback onPressed;
 
-  const CustomProductWidget({Key key,
-    this.id,
-    this.descricao,
-    this.valor,
-    this.favorito,
-    this.onPressed,
-    this.imageURL})
+  const CustomProductWidget(
+      {Key key,
+      this.id,
+      this.descricao,
+      this.valor,
+      this.onPressed,
+      this.imageURL,
+      this.favorito})
       : super(key: key);
 
   @override
@@ -127,9 +130,9 @@ class CustomProductWidget extends StatelessWidget {
                               ),
                               shape: CircleBorder(
                                   side: BorderSide(
-                                    width: 0,
-                                    style: BorderStyle.none,
-                                  )),
+                                width: 0,
+                                style: BorderStyle.none,
+                              )),
                             ),
                           )
                         ],

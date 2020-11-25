@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:open_market/CustomOutlineButton.dart';
 import 'package:open_market/esqueci.dart';
+import 'package:open_market/globals.dart';
 import 'registrar.dart';
-
 import 'home.dart';
 
 void main() async {
@@ -170,6 +170,7 @@ class _MainState extends State<Main> {
       UserCredential usuario = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
           email: emailController.text.replaceAll("\t", ""), password: senhaController.text.replaceAll("\t", ""));
+      globals.UserId = usuario.user.uid;
       Navigator.pop(context); //fecha o loading
       Navigator.push(
         context,
