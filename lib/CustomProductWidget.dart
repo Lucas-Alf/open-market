@@ -115,7 +115,7 @@ class CustomProductWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Container(
+                          /*Container(
                             width: 50,
                             alignment: Alignment.topRight,
                             child: RawMaterialButton(
@@ -134,7 +134,7 @@ class CustomProductWidget extends StatelessWidget {
                                 style: BorderStyle.none,
                               )),
                             ),
-                          )
+                          )*/
                         ],
                       ),
                     ))
@@ -150,7 +150,7 @@ class CustomProductWidget extends StatelessWidget {
     return url;
   }
 
-  void Favorita(String id) {
+  /*void Favorita(String id) {
     final db = FirebaseFirestore.instance.collection("produtos");
     db.doc(id).get().then((doc) {
       if (doc.data()["produtoFavorito"] == true) {
@@ -159,5 +159,5 @@ class CustomProductWidget extends StatelessWidget {
         db.doc(id).update({"produtoFavorito": true});
       }
     });
-  }
+  }*/
 }

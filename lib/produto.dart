@@ -120,7 +120,7 @@ class _ProdutoState extends State<Produto> {
                                       ],
                                     ),
                                   ),
-                                  Container(
+                                  /*Container(
                                     width: 50,
                                     alignment: Alignment.topRight,
                                     child: RawMaterialButton(
@@ -134,7 +134,7 @@ class _ProdutoState extends State<Produto> {
                                             style: BorderStyle.none,
                                           )),
                                     ),
-                                  )
+                                  )*/
                                 ],
                               ),
                             )
