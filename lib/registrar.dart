@@ -165,14 +165,6 @@ class _RegistrarState extends State<Registrar> {
                                 onPressed: () {
                                   if (formKey.currentState.validate()) {
                                     registrar();
-                                    FirebaseFirestore.instance.collection("usuarios").doc(usuarioCPF.text).set(
-                                        {
-                                          "usuarioNome": usuarioNome.text,
-                                          "usuarioSobrenome": usuarioSobrenome.text,
-                                          "usuarioCEP": usuarioCPF.text,
-                                          "usuarioEndereço": "",
-                                        }
-                                    );
                                   }
                                 },
                               ),
@@ -197,6 +189,19 @@ class _RegistrarState extends State<Registrar> {
           password: usuarioSenha.text
       );
       usuario.credential;
+
+      User user = FirebaseAuth.instance.currentUser;
+      String uid = user.uid;
+
+      FirebaseFirestore.instance.collection("usuarios").doc(uid).set(
+          {
+            "usuarioCPF": usuarioCPF.text,
+            "usuarioNome": usuarioNome.text,
+            "usuarioSobrenome": usuarioSobrenome.text,
+            "usuarioCEP": usuarioCPF.text,
+            "usuarioEndereço": "",
+          }
+      );
       Navigator.pop(context);
     } catch (error) {
       Navigator.pop(context);
