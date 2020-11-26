@@ -259,10 +259,10 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.home),
             label: "Home",
           ),
-          BottomNavigationBarItem(
+          /*BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
             label: "Favoritos",
-          ),
+          ),*/
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
             label: "Compras",
