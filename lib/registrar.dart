@@ -112,7 +112,7 @@ class _RegistrarState extends State<Registrar> {
                                 FilteringTextInputFormatter.digitsOnly,
                                 CpfInputFormatter(),
                               ],
-                              keyboardType: TextInputType.text,
+                              keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 labelText: "CPF",
                               ),
@@ -198,8 +198,9 @@ class _RegistrarState extends State<Registrar> {
             "usuarioCPF": usuarioCPF.text,
             "usuarioNome": usuarioNome.text,
             "usuarioSobrenome": usuarioSobrenome.text,
-            "usuarioCEP": usuarioCPF.text,
+            "usuarioCEP": "",
             "usuarioEndereço": "",
+            "usuarioUID": "",
           }
       );
       Navigator.pop(context);
