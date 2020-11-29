@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +8,7 @@ import 'package:open_market/compras.dart';
 import 'package:open_market/conta.dart';
 import 'package:open_market/globals.dart';
 import 'package:open_market/produto.dart';
+import 'package:open_market/produtoIncluir.dart';
 
 class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
@@ -18,7 +20,7 @@ class _HomeState extends State<Home> {
   final List<Widget> paginas = [
     Front(),
     //Favoritos(),
-    Compras(),
+    (FirebaseAuth.instance.currentUser.uid == "YTSjqNdMT9WGHX5NA8JHjPhbI6r1" || FirebaseAuth.instance.currentUser.uid == "VHAD0fdCYRSpS9IeIvZp3lXzpsg2") ? ProdutoIncluir() : Compras(),
     Conta(),
   ];
 
@@ -46,6 +48,12 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.favorite),
             label: "Favoritos",
           ),*/
+          (FirebaseAuth.instance.currentUser.uid == "YTSjqNdMT9WGHX5NA8JHjPhbI6r1" || FirebaseAuth.instance.currentUser.uid == "VHAD0fdCYRSpS9IeIvZp3lXzpsg2") ?
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: "Incluir",
+          )
+              :
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
             label: "Compras",
