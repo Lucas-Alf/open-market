@@ -35,6 +35,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //So usar na Home! Descobrir jeito de não permitir pesquisa em outras paginas
         leading:
             _isSearching ? const BackButton() : Icon(Icons.local_grocery_store),
         title: _isSearching ? _buildSearchField() : Text("Open Market"),
