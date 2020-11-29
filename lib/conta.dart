@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:open_market/CustomOutlineButton.dart';
+import 'package:open_market/contaSenha.dart';
 
 class Conta extends StatefulWidget {
   @override
@@ -198,7 +199,10 @@ class _ContaState extends State<Conta> {
                         child: CustomOutlineButton(
                           text: "TROCAR SENHA",
                           color: Colors.grey,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => ContaSenha()));
+                          },
                         ),
                       ),
                       SizedBox(
