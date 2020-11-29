@@ -20,6 +20,7 @@ class _RegistrarState extends State<Registrar> {
   TextEditingController usuarioCPF = TextEditingController();
   TextEditingController usuarioEmail = TextEditingController();
   TextEditingController usuarioSenha = TextEditingController();
+  TextEditingController usuarioConfirmaSenha = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -156,6 +157,24 @@ class _RegistrarState extends State<Registrar> {
                                 }
                               },
                             ),
+                            TextFormField(
+                              keyboardType: TextInputType.text,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                labelText: "Confirme a senha",
+                              ),
+                              controller: usuarioConfirmaSenha,
+                              validator: (valor) {
+                                if (valor.isEmpty) {
+                                  return "Informe a senha novamente";
+                                } else {
+                                  if (valor != usuarioSenha.text){
+                                      return "As senhas não são iguais.";
+                                  }
+                                  return null;
+                                }
+                              },
+                            ),
                             SizedBox(height: 20),
                             SizedBox(
                               width: double.infinity,
@@ -188,27 +207,20 @@ class _RegistrarState extends State<Registrar> {
           email: usuarioEmail.text,
           password: usuarioSenha.text
       );
-      usuario.credential;
 
-      User user = FirebaseAuth.instance.currentUser;
-      String uid = user.uid;
-
-      FirebaseFirestore.instance.collection("usuarios").doc(uid).set(
+      FirebaseFirestore.instance.collection("usuarios").doc(usuario.user.uid).set(
           {
             "usuarioCPF": usuarioCPF.text,
             "usuarioNome": usuarioNome.text,
             "usuarioSobrenome": usuarioSobrenome.text,
-            "usuarioCEP": "",
-            "usuarioEndereço": "",
-            "usuarioUID": "",
+            "usuarioUID": usuario.user.uid,
           }
       );
       Navigator.pop(context);
     } catch (error) {
-      Navigator.pop(context);
       SnackBar snackbar = SnackBar(
         backgroundColor: Colors.red,
-        content: Text("Erro ao fazer login"),
+        content: Text("Ocorreu um erro ao registrar."),
       );
       scaffoldKey.currentState.showSnackBar(snackbar);
     }
