@@ -1,4 +1,4 @@
 class globals
 {
-   static String UserId;
+   static String userId;
 }

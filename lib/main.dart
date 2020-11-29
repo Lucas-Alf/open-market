@@ -170,7 +170,7 @@ class _MainState extends State<Main> {
       UserCredential usuario = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
           email: emailController.text.replaceAll("\t", ""), password: senhaController.text.replaceAll("\t", ""));
-      globals.UserId = usuario.user.uid;
+      globals.userId = usuario.user.uid;
       Navigator.pop(context); //fecha o loading
       Navigator.push(
         context,

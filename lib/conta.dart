@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:open_market/CustomOutlineButton.dart';
+import 'package:open_market/home.dart';
 
 class Conta extends StatefulWidget {
   @override
@@ -44,7 +45,23 @@ class _ContaState extends State<Conta> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
+        appBar: AppBar(
+            title: Text("Minha Conta"),
+            leading: RawMaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Home()));
+                },
+                child: Icon(
+                  Icons.arrow_back_rounded,
+                  size: 24,
+                ),
+                shape: CircleBorder(
+                    side: BorderSide(
+                  width: 0,
+                  style: BorderStyle.none,
+                )))),
+        key: scaffoldKey,
         body: SingleChildScrollView(
             padding: EdgeInsets.all(10),
             child: Column(children: [
@@ -221,36 +238,38 @@ class _ContaState extends State<Conta> {
   }
 
   Future<String> ReturnImage() async {
-    final ref = FirebaseStorage.instance.ref().child("imagensUsers/" + user.uid);
+    final ref =
+        FirebaseStorage.instance.ref().child("imagensUsers/" + user.uid);
     String url = await ref.getDownloadURL();
     return url;
   }
 
-  confirmaExclusao(){
+  confirmaExclusao() {
     showDialog(
         context: context,
-        builder: (BuildContext context){
+        builder: (BuildContext context) {
           return AlertDialog(
             title: Text("Atenção!"),
-            content: Text("Você deseja realmente EXCLUIR sua conta?\nEsta operação não pode ser revertida"),
+            content: Text(
+                "Você deseja realmente EXCLUIR sua conta?\nEsta operação não pode ser revertida"),
             actions: <Widget>[
               FlatButton(
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("Cancelar")
-              ),
+                  child: Text("Cancelar")),
               FlatButton(
-                  onPressed: (){
+                  onPressed: () {
                     user.delete();
-                    FirebaseFirestore.instance.collection("usuarios").doc(user.uid).delete();
+                    FirebaseFirestore.instance
+                        .collection("usuarios")
+                        .doc(user.uid)
+                        .delete();
                     Navigator.of(context).pop();
                   },
-                  child: Text("Confirmar")
-              )
+                  child: Text("Confirmar"))
             ],
           );
-        }
-    );
+        });
   }
 }
