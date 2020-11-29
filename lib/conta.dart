@@ -15,7 +15,7 @@ class Conta extends StatefulWidget {
 
 class _ContaState extends State<Conta> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController userid = new TextEditingController();
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController usuarioCEP = new TextEditingController();
   TextEditingController usuarioCPF = new TextEditingController();
   TextEditingController usuarioNome = new TextEditingController();
@@ -33,6 +33,9 @@ class _ContaState extends State<Conta> {
       setState(() {
         usuarioNome.text = value.data()["usuarioNome"];
         usuarioSobrenome.text = value.data()["usuarioSobrenome"];
+        usuarioCEP.text = value.data()["usuarioCEP"];
+        usuarioCPF.text = value.data()["usuarioCPF"];
+        usuarioEndereco.text = value.data()["usuarioEndereco"];
       });
     });
     super.initState();
@@ -41,6 +44,7 @@ class _ContaState extends State<Conta> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
         body: SingleChildScrollView(
             padding: EdgeInsets.all(10),
             child: Column(children: [
@@ -169,7 +173,7 @@ class _ContaState extends State<Conta> {
                             if (formKey.currentState.validate()) {
                               FirebaseFirestore.instance
                                   .collection("usuarios")
-                                  .doc(userid.text)
+                                  .doc(user.uid)
                                   .update({
                                 "usuarioCPF": usuarioCPF.text,
                                 "usuarioNome": usuarioNome.text,
@@ -178,6 +182,11 @@ class _ContaState extends State<Conta> {
                                 "usuarioEndereço": usuarioEndereco.text,
                               });
                             }
+                            SnackBar snackbar = SnackBar(
+                              backgroundColor: Colors.blue,
+                              content: Text("Operação realizada com sucesso"),
+                            );
+                            scaffoldKey.currentState.showSnackBar(snackbar);
                           },
                         ),
                       ),
@@ -202,8 +211,7 @@ class _ContaState extends State<Conta> {
                           color: Colors.red,
                           onPressed: () {
                             //Confirmar com o usuário
-                            //user.delete();
-                            //FirebaseFirestore.instance.collection("usuarios").doc(userid.text).delete();
+                            confirmaExclusao();
                           },
                         ),
                       ),
@@ -213,15 +221,36 @@ class _ContaState extends State<Conta> {
   }
 
   Future<String> ReturnImage() async {
-    String uid = user.uid;
-
-    //Pegar dados do usuário aqui  e dar SetState nos TextEditingController
-    setState(() {
-      userid.text = uid;
-    });
-
-    final ref = FirebaseStorage.instance.ref().child("imagensUsers/" + uid);
+    final ref = FirebaseStorage.instance.ref().child("imagensUsers/" + user.uid);
     String url = await ref.getDownloadURL();
     return url;
+  }
+
+  confirmaExclusao(){
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Atenção!"),
+            content: Text("Você deseja realmente EXCLUIR sua conta?\nEsta operação não pode ser revertida"),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("Cancelar")
+              ),
+              FlatButton(
+                  onPressed: (){
+                    user.delete();
+                    FirebaseFirestore.instance.collection("usuarios").doc(user.uid).delete();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("Confirmar")
+              )
+            ],
+          );
+        }
+    );
   }
 }
