@@ -15,7 +15,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
-  String searchQuery = "Search query";
+  String searchQuery = "";
   int paginaCorrente = 0;
 
   final List<Widget> paginas = [
@@ -123,6 +123,10 @@ class _HomeState extends State<Home> {
     });
   }
 
+  String getQueryString(){
+    return searchQuery;
+  }
+
   void _stopSearching() {
     _clearSearchQuery();
 
@@ -145,6 +149,9 @@ class Front extends StatefulWidget{
 }
 
 class _FrontState extends State<Front>{
+
+
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -308,10 +315,8 @@ class _FrontState extends State<Front>{
             padding: EdgeInsets.all(5),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Flexible(
-                  //fit: FlexFit.loose,
                   child: StreamBuilder(
                       stream: FirebaseFirestore.instance.collection("produtos").orderBy("produtoNome", descending:false).snapshots(),
                       builder: (context, snapshot) {
