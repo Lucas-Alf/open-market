@@ -59,15 +59,11 @@ class CustomProductWidget extends StatelessWidget {
                       return Container(
                           padding: EdgeInsets.all(10),
                           height: 282,
-                          child: OctoImage(
-                            image: CachedNetworkImageProvider(""),
-                            placeholderBuilder: OctoPlaceholder.blurHash(
-                              'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-                            ),
-                            errorBuilder: OctoError.icon(color: Colors.red),
-                            fit: BoxFit.cover,
+                          child: Image(
+                            image: AssetImage('assets/userError.png'),
                             height: 89,
-                          ));
+                          ),
+                      );
                     }
                   },
                 ),
