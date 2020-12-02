@@ -34,10 +34,10 @@ class _ProdutoState extends State<Produto> {
     if(widget.dadosProduto != null){
       produtoCor = widget.dadosProduto.data()["produtoCor"];
       produtoDescricao = widget.dadosProduto.data()["produtoDescricao"];
-      produtoImagem = widget.dadosProduto.data()["produtoImagem"];
+      produtoImagem = widget.dadosProduto.data()["produtoImagem"].toString();
       produtoMarca = widget.dadosProduto.data()["produtoMarca"];
       produtoNome = widget.dadosProduto.data()["produtoNome"];
-      produtoValor = widget.dadosProduto.data()["produtoPreco"];
+      produtoValor = double.parse(widget.dadosProduto.data()["produtoPreco"].toString());
     }
   }
 
@@ -74,7 +74,7 @@ class _ProdutoState extends State<Produto> {
                                     placeholderBuilder: OctoPlaceholder.blurHash(
                                       'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
                                     ),
-                                    errorBuilder: OctoError.icon(color: Colors.red),
+                                    errorBuilder: OctoError.icon(color: Colors.blue),
                                     fit: BoxFit.cover,
                                     height: 89,
                                   ));
@@ -82,15 +82,10 @@ class _ProdutoState extends State<Produto> {
                               return Container(
                                   padding: EdgeInsets.all(10),
                                   height: 282,
-                                  child: OctoImage(
-                                    image: CachedNetworkImageProvider(""),
-                                    placeholderBuilder: OctoPlaceholder.blurHash(
-                                      'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-                                    ),
-                                    errorBuilder: OctoError.icon(color: Colors.red),
-                                    fit: BoxFit.cover,
+                                  child: Image(
+                                    image: AssetImage('assets/userError.png'),
                                     height: 89,
-                                  )
+                                  ),
                               );
                             }
                           },
@@ -223,7 +218,7 @@ class _ProdutoState extends State<Produto> {
                             .map<DropdownMenuItem<int>>((int value) {
                           return DropdownMenuItem<int>(
                             value: value,
-                            child: Text("Quantidade: " + value.toString(),style:TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                            child: Text(value.toString(),style:TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                           );
                         }).toList(),
                       ),

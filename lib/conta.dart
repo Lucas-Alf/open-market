@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:open_market/CustomOutlineButton.dart';
 import 'package:open_market/home.dart';
@@ -16,6 +19,8 @@ class Conta extends StatefulWidget {
 }
 
 class _ContaState extends State<Conta> {
+  File _image;
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController usuarioCEP = new TextEditingController();
@@ -64,13 +69,14 @@ class _ContaState extends State<Conta> {
                 )))),
         key: scaffoldKey,
         body: SingleChildScrollView(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(15),
             child: Column(children: [
               Container(
                 height: 150,
+                width: MediaQuery.of(context).size.width/1.25,
                 decoration: BoxDecoration(
                   color: new Color(0xffD9D9D9),
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Container(
                   width: double.infinity,
@@ -79,30 +85,43 @@ class _ContaState extends State<Conta> {
                       FutureBuilder<String>(
                         future: ReturnImage(),
                         builder: (BuildContext context,
-                            AsyncSnapshot<String> snapshot) {
+                             AsyncSnapshot<String> snapshot) {
                           if (snapshot.hasData) {
                             //Add way to upload a photo
                             return Container(
-                                padding: EdgeInsets.all(10),
-                                height: 100,
-                                child: OctoImage(
-                                  image:
-                                      CachedNetworkImageProvider(snapshot.data),
-                                  placeholderBuilder: OctoPlaceholder.blurHash(
-                                    'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-                                  ),
-                                  errorBuilder:
-                                      OctoError.icon(color: Colors.red),
-                                  fit: BoxFit.cover,
-                                  height: 89,
-                                ));
+                                //padding: EdgeInsets.all(10),
+                                height: 150,
+                                child: ConstrainedBox(
+                                    constraints: BoxConstraints.expand(),
+                                    child: FlatButton(
+                                        onPressed: chooseFile,
+                                        child: OctoImage(
+                                          image:
+                                          CachedNetworkImageProvider(snapshot.data),
+                                          placeholderBuilder: OctoPlaceholder.blurHash(
+                                            'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+                                          ),
+                                          errorBuilder:
+                                          OctoError.icon(color: Colors.red),
+                                          fit: BoxFit.cover,
+                                          height: 125,
+                                        )
+                                    )
+                                )
+                            );
                           } else {
                             return Column(
                               children: [
                                 SizedBox(height: 25),
-                                Image(
-                                    image: AssetImage('assets/userIcon.png'),
-                                    height: 89)
+                                FlatButton(
+                                    onPressed: chooseFile,
+                                    padding: EdgeInsets.all(0.0),
+                                    child: Image(
+                                      image: AssetImage('assets/userIcon.png'),
+                                      height: 89,
+                                    ),
+                                )
+
                               ],
                             );
                           }
@@ -244,8 +263,7 @@ class _ContaState extends State<Conta> {
   }
 
   Future<String> ReturnImage() async {
-    final ref =
-        FirebaseStorage.instance.ref().child("imagensUsers/" + user.uid);
+    final ref = FirebaseStorage.instance.ref().child("imagensUsers/" + user.uid);
     String url = await ref.getDownloadURL();
     return url;
   }
@@ -277,5 +295,21 @@ class _ContaState extends State<Conta> {
             ],
           );
         });
+  }
+
+  Future chooseFile() async {
+    await ImagePicker().getImage(source: ImageSource.gallery).then((image) {
+      setState(() {
+        _image =  File(image.path);
+      });
+    });
+    uploadFile();
+  }
+
+  Future uploadFile() async {
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('imagensUsers/${user.uid}');
+    StorageUploadTask uploadTask = storageReference.putFile(_image);
   }
 }
