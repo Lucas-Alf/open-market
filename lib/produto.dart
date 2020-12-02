@@ -48,7 +48,7 @@ class _ProdutoState extends State<Produto> {
         title: Text("Detalhes do Produto"),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(5, 2, 5, 0),
+        padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
           child: Column(
               children: [
                 //Imagem/Nome
@@ -227,18 +227,18 @@ class _ProdutoState extends State<Produto> {
                           );
                         }).toList(),
                       ),
+                      SizedBox(height: 15,),
+                      SizedBox(
+                        width: double.infinity,
+                        child: CustomOutlineButton(
+                          text: "Comprar",
+                          color: Theme.of(context).primaryColor,
+                          onPressed: () {
+                            //Coisas acontecem!!!
+                          },
+                        ),
+                      ),
                     ],
-                  ),
-                ),
-                SizedBox(height: 15,),
-                SizedBox(
-                  width: double.infinity,
-                  child: CustomOutlineButton(
-                    text: "Comprar",
-                    color: Theme.of(context).primaryColor,
-                    onPressed: () {
-                      //Coisas acontecem!!!
-                    },
                   ),
                 ),
                 SizedBox(height: 20,),
