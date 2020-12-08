@@ -245,7 +245,7 @@ class _ProdutoIncluirState extends State<ProdutoIncluir> {
           "produtoImagem" : "produtos/${uuid}",
           "produtoMarca" : produtoMarca.text,
           "produtoNome" : produtoNome.text,
-          "produtoPreco" : double.parse(produtoPreco.text.replaceAll(",", ".")),
+          "produtoPreco" : double.parse(produtoPreco.text.replaceAll(".", "").replaceAll(",", ".")),
         }
     );
     setState(() {

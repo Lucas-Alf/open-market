@@ -60,7 +60,7 @@ class CustomProductWidget extends StatelessWidget {
                           padding: EdgeInsets.all(10),
                           height: 282,
                           child: Image(
-                            image: AssetImage('assets/userError.png'),
+                            image: AssetImage('assets/iconError.png'),
                             height: 89,
                           ),
                       );

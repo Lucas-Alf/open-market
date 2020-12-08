@@ -66,6 +66,7 @@ flutter:
     - assets/iphone.png
     - assets/xps.jpg
     - assets/cadeira.png
+    - assets/iconError.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

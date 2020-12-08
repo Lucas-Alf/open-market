@@ -83,7 +83,7 @@ class _ProdutoState extends State<Produto> {
                                   padding: EdgeInsets.all(10),
                                   height: 282,
                                   child: Image(
-                                    image: AssetImage('assets/userError.png'),
+                                    image: AssetImage('assets/iconError.png'),
                                     height: 89,
                                   ),
                               );
